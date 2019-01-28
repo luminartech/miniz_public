@@ -21,6 +21,7 @@ endif()
 write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/minizConfigVersion.cmake" VERSION ${MINIZ_VERSION} COMPATIBILITY AnyNewerVersion)
 
 # build tree package config
+set(MINIZ_SOURCES miniz/miniz_zip.c)
 configure_file(cmake/minizBuildConfig.cmake.in minizConfig.cmake @ONLY)
 
 # install tree package config
@@ -31,30 +32,11 @@ configure_package_config_file(
 	PATH_VARS CMAKE_INSTALL_INCLUDEDIR
 	NO_CHECK_REQUIRED_COMPONENTS_MACRO)
 
-#if(MINIZ_INSTALL_ENABLE)
-#	install(FILES
-#		"${CMAKE_CURRENT_BINARY_DIR}/${MINIZ_INSTALL_CONFIGDIR}/minizConfig.cmake"
-#		"${CMAKE_CURRENT_BINARY_DIR}/minizConfigVersion.cmake"
-#		DESTINATION ${MINIZ_INSTALL_CONFIGDIR})
-#endif()
-#
-#install(TARGETS miniz EXPORT minizTargets)
-#
-#export(EXPORT minizTargets FILE "${CMAKE_CURRENT_BINARY_DIR}/minizTargets.cmake")
-
 if(MINIZ_INSTALL_ENABLE)
-	install(EXPORT minizTargets FILE minizTargets.cmake DESTINATION ${MINIZ_INSTALL_CONFIGDIR})
+	install(FILES
+		"${CMAKE_CURRENT_BINARY_DIR}/${MINIZ_INSTALL_CONFIGDIR}/minizConfig.cmake"
+		"${CMAKE_CURRENT_BINARY_DIR}/minizConfigVersion.cmake"
+		DESTINATION ${MINIZ_INSTALL_CONFIGDIR})
 endif()
 
 export(PACKAGE miniz)
-
-#if(NOT TARGET uninstall)
-#	configure_file(
-#		${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in
-#		${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake
-#		IMMEDIATE @ONLY)
-#
-#	add_custom_target(uninstall
-#		COMMAND ${CMAKE_COMMAND} -P
-#		${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
-#endif()
